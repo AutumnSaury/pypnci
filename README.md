@@ -1,6 +1,6 @@
 # PYPNC
 
-A python parody of Netcat.
+A Python parody of Netcat.
 
 ## Supported Features
 
