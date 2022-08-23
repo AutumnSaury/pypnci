@@ -1,6 +1,6 @@
 # PYPNCI
 
-A Python parody of Netcat's Interface  
+A Python Parody of Netcat's Interface  
 Made for a quiz after learning socket communication in Python
 
 ## Supported Features
@@ -9,4 +9,4 @@ Made for a quiz after learning socket communication in Python
 - File transmission, while only tiny little ones can be transmitted though
 
 ## WIP
-*NOPE*
+*\*NOPE\**
