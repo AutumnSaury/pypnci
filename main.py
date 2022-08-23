@@ -1,4 +1,3 @@
-from xmlrpc.client import boolean
 from tcp_connection import TCPConnection
 import click, signal
 
@@ -7,7 +6,7 @@ import click, signal
 @click.argument('dest', required=False, type=str)
 @click.argument('port', required=False, type=int)
 
-def cli(port: int, l: boolean=False, dest: str=None):
+def cli(port: int, l: bool=False, dest: str=None):
   if dest and not port:
     try:
       port = int(dest)
@@ -23,5 +22,9 @@ def cli(port: int, l: boolean=False, dest: str=None):
     exit(1)
   finally:
     if 'session' in locals().keys():
+      session.in_thread.join()
       session.close()
-cli()
+    exit(0)
+
+if __name__ == '__main__':
+  cli()

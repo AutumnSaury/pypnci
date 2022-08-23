@@ -33,14 +33,16 @@ class TCPConnection:
       self.sock.close()
       exit(1)
     self.in_thread = Thread(target=self.__send_msg, args=(self.sock, ))
-    self.out_thread = Thread(target=self.__recv_msg, args=(self.sock, ))
     self.in_thread.start()
+    self.out_thread = Thread(target=self.__recv_msg, args=(self.sock, ))
     self.out_thread.start()
     print('Connection established', file=sys.stderr)
 
   def __send_msg(self, s: socket.socket):
     while True:
       line = sys.stdin.buffer.readline()
+      if line == b'':
+        break;
       s.send(line)
 
   def __recv_msg(self, s: socket.socket):
@@ -49,12 +51,14 @@ class TCPConnection:
       sys.stdout.buffer.write(line)
       sys.stdout.flush()
 
+  # Do some clean up
   def close(self, _=None, __=None):
     self.sock.close()
     if self.client:
       self.client.close()
-    if self.in_thread or self.out_thread:
+    if self.in_thread.is_alive():
       stop_thread(self.in_thread)
+    if self.out_thread.is_alive():
       stop_thread(self.out_thread)
 
 def stop_thread(thread):
