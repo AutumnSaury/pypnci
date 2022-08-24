@@ -42,12 +42,16 @@ class TCPConnection:
     while True:
       line = sys.stdin.buffer.readline()
       if line == b'':
-        self.clean()
+        self.close()
       s.send(line)
 
   def __recv_msg(self, s: socket.socket):
     while True:
-      line = s.recv(1024)
+      line = None
+      try:
+        line = s.recv(1024)
+      except:
+        self.close()
       sys.stdout.buffer.write(line)
       sys.stdout.flush()
 

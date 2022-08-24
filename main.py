@@ -1,5 +1,5 @@
 from tcp_connection import TCPConnection
-import click, signal
+import click, signal, sys
 
 @click.command()
 @click.option('-l', is_flag=True, default=False, help='Server mode')
@@ -18,7 +18,7 @@ def cli(port: int, l: bool=False, dest: str=None):
     session = TCPConnection(l, port, dest)
     signal.signal(2, session.close)
   except PermissionError:
-    print('Permission denied')
+    print('Permission denied', file=sys.stderr)
     exit(1)
   finally:
     if 'session' in locals().keys():
