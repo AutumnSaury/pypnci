@@ -24,7 +24,6 @@ def cli(port: int, l: bool=False, dest: str=None):
     if 'session' in locals().keys():
       session.in_thread.join()
       session.close()
-    exit(0)
 
 if __name__ == '__main__':
   cli()
